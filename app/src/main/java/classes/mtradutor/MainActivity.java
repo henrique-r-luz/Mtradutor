@@ -60,29 +60,7 @@ public class MainActivity extends AppCompatActivity {
        // lView.setAdapter(fraseAdapter);
         // lView.setAdapter(new ItensFrases(this,
         //       android.R.layout.simple_list_item_1, listarViagens()));
-
-
-
-
-       /* palavra.addTextChangedListener(new TextWatcher() {
-
-            public void afterTextChanged(Editable arg0) {
-                // TODO Auto-generated method stub
-            }
-
-            public void beforeTextChanged(CharSequence arg0, int arg1,
-                                          int arg2, int arg3) {
-                // TODO Auto-generated method stub
-            }
-
-            public void onTextChanged(CharSequence arg0, int arg1, int arg2,
-                                      int arg3) {
-                //  Pesquisar();
-
-                // lView.setAdapter(new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, pesquisa));
-            }
-        });*/
-
+        
 
     }
 
