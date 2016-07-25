@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
        // lView.setAdapter(fraseAdapter);
         // lView.setAdapter(new ItensFrases(this,
         //       android.R.layout.simple_list_item_1, listarViagens()));
-        
+
 
     }
 
