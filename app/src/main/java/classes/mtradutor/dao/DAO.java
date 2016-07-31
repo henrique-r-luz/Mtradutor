@@ -9,6 +9,8 @@ import classes.mtradutor.modelo.DatabaseHelper;
 /**
  * Created by henrique on 31/07/16.
  */
+
+//vericar padrão singleton
 public class DAO {
 
     private DatabaseHelper helper;
