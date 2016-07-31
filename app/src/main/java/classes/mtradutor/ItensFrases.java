@@ -17,10 +17,15 @@ public class ItensFrases extends ArrayAdapter<Frases> {
     private Context context;
     private List<Frases> zombies = null;
 
+
+
+
+
     public ItensFrases (Context context,  List<Frases> frase) {
         super(context,0, frase);
         this.zombies = frase;
         this.context = context;
+
     }
 
     @Override
@@ -42,4 +47,9 @@ public class ItensFrases extends ArrayAdapter<Frases> {
 
         return view;
     }
+
+
+
+
+
 }

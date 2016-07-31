@@ -10,7 +10,7 @@ import android.widget.TextView;
 /**
  * Created by henrique on 11/01/16.
  */
-public class DescricaoActivity extends AppCompatActivity {
+public class DescricaoActivity extends TamplateMtradutor {
 
 
 
@@ -21,10 +21,13 @@ public class DescricaoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.descricao);
         TextView unitTexto = (TextView) findViewById(R.id.unitTexto);
+        TextView descricaoTexto = (TextView) findViewById(R.id.descricaoTexto);
 
         Intent myIntent = getIntent();
         String titulo = myIntent.getStringExtra("titulo");
+        String descricao = myIntent.getStringExtra("descricao");
         unitTexto.setText(titulo);
+        descricaoTexto.setText(descricao);
 
 
     }

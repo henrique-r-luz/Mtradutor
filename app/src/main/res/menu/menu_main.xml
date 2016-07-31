@@ -2,9 +2,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="classes.mtradutor.MainActivity">
+
+    <item
+        android:id="@+id/inicio"
+        android:orderInCategory="100"
+        android:title="Início"
+        app:showAsAction="never" />
+
+
     <item
         android:id="@+id/nova_palavra"
         android:orderInCategory="100"
         android:title="Nova palavra"
+        app:showAsAction="never" />
+
+
+    <item
+        android:id="@+id/estatistica"
+        android:orderInCategory="100"
+        android:title="Estatística"
         app:showAsAction="never" />
 </menu>

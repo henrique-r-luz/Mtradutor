@@ -8,9 +8,10 @@ public class Frases {
 
     private String tituloIngles;
     private String conteudo;
+    private int id;
 
 
-    public Frases(String titulo, String conteudo){
+    public Frases(int id,String titulo, String conteudo){
            this.setTituloIngles(titulo);
           this.setConteudo(conteudo);
     }
@@ -22,6 +23,9 @@ public class Frases {
     public String getConteudo() {
         return conteudo;
     }
+    public int getId(){
+        return id;
+    }
 
     public void setTituloIngles(String tituloIngles) {
         this.tituloIngles = tituloIngles;
@@ -30,6 +34,13 @@ public class Frases {
     public void setConteudo(String conteudo) {
         this.conteudo = conteudo;
     }
+
+
+    public void setId(int id){
+        this.id = id;
+    }
+
+
 
 
 
