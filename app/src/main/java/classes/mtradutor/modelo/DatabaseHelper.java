@@ -29,10 +29,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE traducao (" +
-                "_id INTEGER  AUTOINCREMENT  PRIMARY KEY," +
+                "_id INTEGER PRIMARY KEY  AUTOINCREMENT ," +
                 "ingles TEXT, " +
                 "portugues TEXT, " +
-                "numacesso INTERGER;");
+                "numacesso INTERGER);");
 
 
     }
