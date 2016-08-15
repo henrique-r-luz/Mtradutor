@@ -10,6 +10,7 @@ public class Traducao {
     private int id;
     private String ingles;
     private String portugues;
+    private int numAcessos;
 
     public int getId() {
         return id;
@@ -33,5 +34,13 @@ public class Traducao {
 
     public void setPortugues(String portugues) {
         this.portugues = portugues;
+    }
+
+    public int getNumAcessos() {
+        return numAcessos;
+    }
+
+    public void setNumAcessos(int numAcessos) {
+        this.numAcessos = numAcessos;
     }
 }

@@ -51,7 +51,15 @@ public class CadastraPalavraActivity extends TamplateMtradutor {
         }else{
             Toast.makeText(this, "O dados foram salvos",
                     Toast.LENGTH_SHORT).show();
+            portugues.setText("");
+            ingles.setText("");
         }
+    }
+
+
+    protected void onDestroy() {
+        helper.close();
+        super.onDestroy();
     }
 
 

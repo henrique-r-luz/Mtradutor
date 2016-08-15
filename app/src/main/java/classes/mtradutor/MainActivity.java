@@ -4,6 +4,8 @@ package classes.mtradutor;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 //import android.support.v7.app.AlertDialog;
@@ -29,11 +31,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.lang.String;
 
+import classes.mtradutor.modelo.DatabaseHelper;
+import classes.mtradutor.modelo.Traducao;
+
 public class MainActivity extends TamplateMtradutor {
 
     private List<String> listGroup;
     private HashMap<String, List<String>> listData;
     private TextView texto;
+    private DatabaseHelper helper;
     private EditText palavra;
     private ListView lView;
     private ArrayList<String> pesquisa = new ArrayList<String>();
@@ -57,6 +63,7 @@ public class MainActivity extends TamplateMtradutor {
         lView = (ListView) findViewById(R.id.palavrasList);
         //eventos
         this.setEventEnter(palavra);
+        helper = new DatabaseHelper(this);
 
         // lView.setAdapter(fraseAdapter);
         // lView.setAdapter(new ItensFrases(this,
@@ -80,12 +87,12 @@ public class MainActivity extends TamplateMtradutor {
        dispara esse evento quando pessiona o botão enter
     */
     //abre a tela de visualizaçao de significado da palavra
-    public void viewSignificado(Frases frase) {
+    public void viewSignificado(Traducao frase) {
 
         Intent intent = new Intent();
         intent.setClass(this, DescricaoActivity.class);
-        intent.putExtra("titulo", frase.getTituloIngles());
-        intent.putExtra("descricao", frase.getConteudo());
+        intent.putExtra("titulo", frase.getIngles());
+        intent.putExtra("descricao", frase.getPortugues());
         startActivity(intent);
         //new AlertDialog.Builder(this).setTitle("Argh").setMessage("Watch out!").setNeutralButton("Close", null).show();
     }
@@ -118,7 +125,7 @@ public class MainActivity extends TamplateMtradutor {
     private void eventEnter() {
 
         //new AlertDialog.Builder(this).setTitle("texto").setMessage(palavra.getText()).setNeutralButton("Close", null).show();
-        List<Frases> frase = gerarFrases(palavra.getText().toString());
+        List<Traducao> frase = gerarFrases(palavra.getText().toString());
 
         if (frase.isEmpty()) {
             new AlertDialog.Builder(this).setTitle("Messagem").setMessage("Não existe esta palavra").setNeutralButton("Close", null).show();
@@ -131,7 +138,7 @@ public class MainActivity extends TamplateMtradutor {
                 public void onItemClick(AdapterView<?> arg0, View view, int position, long arg3) {
 
                     TextView objtexto = (TextView) view.findViewById(R.id.titulo);
-                    Frases frase =  (Frases) arg0.getAdapter().getItem(position);
+                    Traducao frase =  (Traducao) arg0.getAdapter().getItem(position);
                     viewSignificado(frase);
                     //   new AlertDialog.Builder(MainActivity.this).setTitle("Argh").setMessage("Watch out!").setNeutralButton("Close", null).show();
 
@@ -142,33 +149,40 @@ public class MainActivity extends TamplateMtradutor {
     }
 
 
-    private List<Frases> gerarFrases(String pesquisa) {
-        List<Frases> frase = new ArrayList<Frases>();
-        frase.add(criarFrases(1,"Shane", "passou a ser integrado a softwares de editoração eletrônica como Aldus PageMaker."));
-        frase.add(criarFrases(2,"What's goin on", "passou a ser integrado a softwares de editoração eletrônica como Aldus PageMaker."));
-        frase.add(criarFrases(3,"Glen", "passou a ser integrado a softwares de editoração eletrônica como Aldus PageMaker."));
-        frase.add(criarFrases(4,"Shane", "passou a ser integrado a softwares de editoração eletrônica como Aldus PageMaker. "));
-        frase.add(criarFrases(5,"What's goin on", "passou a ser integrado a softwares de editoração eletrônica como Aldus PageMaker. "));
-        frase.add(criarFrases(6,"Glen", "passou a ser integrado a softwares de editoração eletrônica como Aldus PageMaker."));
-        frase.add(criarFrases(7,"Shane", "passou a ser integrado a softwares de editoração eletrônica como Aldus PageMaker."));
-        frase.add(criarFrases(8,"What's goin on", "passou a ser integrado a softwares de editoração eletrônica como Aldus PageMaker."));
-        frase.add(criarFrases(9,"Glen", "passou a ser integrado a softwares de editoração eletrônica como Aldus PageMaker."));
-        frase.add(criarFrases(10,"Shane", "passou a ser integrado a softwares de editoração eletrônica como Aldus PageMaker."));
+    private List<Traducao> gerarFrases(String pesquisa) {
 
-        List<Frases> fraseResp = new ArrayList<Frases>();
-        for (Frases item : frase) {
-            if (item.getTituloIngles().equals(pesquisa)) {
-                fraseResp.add(item);
-            }
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor cursor =
+                db.rawQuery("SELECT *" +
+                                " FROM traducao",
+                        null);
+        cursor.moveToFirst();
+        List<Traducao> frase = new ArrayList<Traducao>();
+        for (int i = 0; i < cursor.getCount(); i++) {
+
+            Traducao item = new Traducao();
+
+            item.setId(cursor.getInt(0));
+            item.setIngles(cursor.getString(1));
+            item.setPortugues(cursor.getString(2));
+            item.setNumAcessos(cursor.getInt(3));
+
+            frase.add(item);
+            cursor.moveToNext();
+
         }
+        cursor.close();
 
 
-        return fraseResp;
+
+        return frase;
     }
 
-    private Frases criarFrases(int id,String titulo, String conteudo) {
-        Frases frase = new Frases(id,titulo, conteudo);
-        return frase;
+
+
+    protected void onDestroy() {
+        helper.close();
+        super.onDestroy();
     }
 
 
