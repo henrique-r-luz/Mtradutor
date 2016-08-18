@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.lang.String;
 
+import classes.mtradutor.dao.DaoTraducao;
 import classes.mtradutor.modelo.DatabaseHelper;
 import classes.mtradutor.modelo.Traducao;
 
@@ -91,8 +92,7 @@ public class MainActivity extends TamplateMtradutor {
 
         Intent intent = new Intent();
         intent.setClass(this, DescricaoActivity.class);
-        intent.putExtra("titulo", frase.getIngles());
-        intent.putExtra("descricao", frase.getPortugues());
+        intent.putExtra("myFrase", frase);
         startActivity(intent);
         //new AlertDialog.Builder(this).setTitle("Argh").setMessage("Watch out!").setNeutralButton("Close", null).show();
     }
@@ -151,31 +151,9 @@ public class MainActivity extends TamplateMtradutor {
 
     private List<Traducao> gerarFrases(String pesquisa) {
 
-        SQLiteDatabase db = helper.getReadableDatabase();
-        Cursor cursor =
-                db.rawQuery("SELECT *" +
-                                " FROM traducao",
-                        null);
-        cursor.moveToFirst();
-        List<Traducao> frase = new ArrayList<Traducao>();
-        for (int i = 0; i < cursor.getCount(); i++) {
+        DaoTraducao daoTraducao = new DaoTraducao();
+        return daoTraducao.listaTodos(helper);
 
-            Traducao item = new Traducao();
-
-            item.setId(cursor.getInt(0));
-            item.setIngles(cursor.getString(1));
-            item.setPortugues(cursor.getString(2));
-            item.setNumAcessos(cursor.getInt(3));
-
-            frase.add(item);
-            cursor.moveToNext();
-
-        }
-        cursor.close();
-
-
-
-        return frase;
     }
 
 

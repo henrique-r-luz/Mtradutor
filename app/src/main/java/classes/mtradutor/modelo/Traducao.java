@@ -1,9 +1,11 @@
 package classes.mtradutor.modelo;
 
+import java.io.Serializable;
+
 /**
  * Created by henrique on 31/07/16.
  */
-public class Traducao {
+public class Traducao implements Serializable {
 
 
 

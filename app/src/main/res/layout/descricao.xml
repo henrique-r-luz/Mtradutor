@@ -26,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:id="@+id/nummeroAcesso"
+        android:id="@+id/numeroAcesso"
         android:textStyle="bold"
         android:textSize="16sp"
         android:text="ola2" />
@@ -38,6 +38,10 @@
         android:id="@+id/descricaoTexto"
         android:textSize="16sp"
         android:text="ola1" />
+
+    <Space
+        android:layout_width="8dp"
+        android:layout_height="25dp" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -54,7 +58,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Excluir"
+            android:onClick="excluir"
             android:id="@+id/excluir" />
+
     </LinearLayout>
 
 </LinearLayout>
