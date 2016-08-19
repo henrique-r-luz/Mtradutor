@@ -2,6 +2,7 @@ package classes.mtradutor.dao;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
@@ -17,12 +18,13 @@ import classes.mtradutor.modelo.Traducao;
  */
 public class DaoTraducao {
 
-    public  List<Traducao> listaTodos(DatabaseHelper helper){
+    public  List<Traducao> listaTodos(DatabaseHelper helper, String pesquisa){
 
         SQLiteDatabase db = helper.getReadableDatabase();
         Cursor cursor =
                 db.rawQuery("SELECT *" +
-                                " FROM traducao",
+                                " FROM traducao " +
+                                " where ingles like '%"+pesquisa+"%'",
                         null);
         cursor.moveToFirst();
         List<Traducao> frase = new ArrayList<Traducao>();
@@ -72,5 +74,25 @@ public class DaoTraducao {
                     Toast.LENGTH_SHORT).show();
 
         }
+    }
+
+
+    public void update(DatabaseHelper helper, Traducao frase, Context contexto){
+
+        SQLiteDatabase db = helper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("portugues", frase.getPortugues());
+        values.put("ingles", frase.getIngles());
+        values.put("numacesso", frase.getNumAcessos());
+        long resultado = db.update("traducao", values, "_id = ?", new String []{Integer.toString(frase.getId())});
+
+        if (resultado == -1) {
+            Toast.makeText(contexto, "ocorreu um erro ao salvar os dados",Toast.LENGTH_SHORT).show();
+        } else {
+            //Toast.makeText(contexto, "O dados foram salvos",
+              //      Toast.LENGTH_SHORT).show();
+
+        }
+
     }
 }

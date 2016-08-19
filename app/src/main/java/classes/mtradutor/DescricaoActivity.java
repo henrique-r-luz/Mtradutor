@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import classes.mtradutor.dao.DaoTraducao;
 import classes.mtradutor.modelo.DatabaseHelper;
 import classes.mtradutor.modelo.Traducao;
 
@@ -24,6 +25,9 @@ public class DescricaoActivity extends TamplateMtradutor {
     private TextView unitTexto;
     private TextView descricaoTexto;
     private TextView numAcesso;
+    private int id;
+    private Traducao frase;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +38,8 @@ public class DescricaoActivity extends TamplateMtradutor {
         numAcesso =  (TextView) findViewById(R.id.numeroAcesso);
 
         Intent myIntent = getIntent();
-        Traducao frase = (Traducao) myIntent.getSerializableExtra("myFrase");
+        this.frase = (Traducao) myIntent.getSerializableExtra("myFrase");
+        this.id = frase.getId();
         unitTexto.setText(frase.getIngles());
         descricaoTexto.setText(frase.getPortugues());
         numAcesso.setText("Visualuzações: "+frase.getNumAcessos());
@@ -43,7 +48,12 @@ public class DescricaoActivity extends TamplateMtradutor {
     }
 
 
-    public void editar(){
+    public void editar(View view){
+        Intent intent = new Intent();
+        intent.setClass(this, CadastroEditarActivity.class);
+        intent.putExtra("myFrase", this.frase);
+        startActivity(intent);
+
 
     }
 
@@ -60,7 +70,8 @@ public class DescricaoActivity extends TamplateMtradutor {
                 "Sim",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
+                       // daoTraducao.excluir(id,helper);
+                        eventExcluir();
                     }
                 });
 
@@ -76,6 +87,17 @@ public class DescricaoActivity extends TamplateMtradutor {
         alert11.show();
 
     }
+
+
+    public void eventExcluir(){
+        DaoTraducao daoTraducao = new DaoTraducao();
+        daoTraducao.excluir(this.id,helper);
+        Intent intent = new Intent();
+        intent.setClass(this, MainActivity.class);
+        startActivity(intent);
+        Toast.makeText(this, "Dados excluidos",Toast.LENGTH_SHORT).show();
+    }
+
 
 
     protected void onDestroy() {

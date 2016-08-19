@@ -58,12 +58,8 @@ public class MainActivity extends TamplateMtradutor {
         setSupportActionBar(toolbar);
 
 
-        // variáveis que representão componentes
-        texto = (TextView) findViewById(R.id.texto);
-        palavra = (EditText) findViewById(R.id.palavra);
-        lView = (ListView) findViewById(R.id.palavrasList);
-        //eventos
-        this.setEventEnter(palavra);
+
+        init();
         helper = new DatabaseHelper(this);
 
         // lView.setAdapter(fraseAdapter);
@@ -71,6 +67,26 @@ public class MainActivity extends TamplateMtradutor {
         //       android.R.layout.simple_list_item_1, listarViagens()));
 
 
+    }
+
+
+    public void onResume()
+    {  // After a pause OR at startup
+        super.onResume();
+        lView.setAdapter(null);
+
+        //Refresh your stuff here
+
+
+    }
+
+
+    public void init(){
+        texto = (TextView) findViewById(R.id.texto);
+        palavra = (EditText) findViewById(R.id.palavra);
+        lView = (ListView) findViewById(R.id.palavrasList);
+        //eventos
+        this.setEventEnter(palavra);
     }
 
 
@@ -89,7 +105,9 @@ public class MainActivity extends TamplateMtradutor {
     */
     //abre a tela de visualizaçao de significado da palavra
     public void viewSignificado(Traducao frase) {
-
+        DaoTraducao daoTraducao = new DaoTraducao();
+        frase.setNumAcessos(frase.getNumAcessos()+1);
+        daoTraducao.update(helper,frase,this);
         Intent intent = new Intent();
         intent.setClass(this, DescricaoActivity.class);
         intent.putExtra("myFrase", frase);
@@ -152,9 +170,12 @@ public class MainActivity extends TamplateMtradutor {
     private List<Traducao> gerarFrases(String pesquisa) {
 
         DaoTraducao daoTraducao = new DaoTraducao();
-        return daoTraducao.listaTodos(helper);
+        return daoTraducao.listaTodos(helper,pesquisa);
 
     }
+
+
+
 
 
 

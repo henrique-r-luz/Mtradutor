@@ -45,7 +45,7 @@ public class ItensFrases extends ArrayAdapter<Traducao> {
         TextView textAcessos = (TextView) view.findViewById(R.id.acessos);
         textTitulo.setText(frase.getIngles());
         String num = Integer.toString(frase.getNumAcessos());
-        textAcessos.setText(num);
+        textAcessos.setText(Integer.toString(frase.getNumAcessos()));
 
       //  TextView textViewIdade = (TextView)view.findViewById(R.id.text_view_idade_zombie);
       //  String textoIdade = String.valueOf(zombie.getIdade()) + " " + context.getString(R.string.anos_idade);

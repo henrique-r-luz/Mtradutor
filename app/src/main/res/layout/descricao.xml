@@ -51,7 +51,8 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Editar"
+            android:text="Edita"
+            android:onClick="editar"
             android:id="@+id/editar" />
 
         <Button

@@ -1,6 +1,7 @@
 package classes.mtradutor;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,12 +24,13 @@ import classes.mtradutor.modelo.Traducao;
 /**
  * Created by henrique on 29/02/16.
  */
-public class CadastraPalavraActivity extends TamplateMtradutor {
+public class CadastroEditarActivity extends TamplateMtradutor {
 
 
     private DatabaseHelper helper;
     private TextView portugues;
     private TextView ingles;
+    private Traducao frase;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -38,11 +40,13 @@ public class CadastraPalavraActivity extends TamplateMtradutor {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.cadastra_palavra);
-
+        setContentView(R.layout.cadastro_editar);
+        Intent myIntent = getIntent();
+        this.frase = (Traducao) myIntent.getSerializableExtra("myFrase");
         this.portugues = (TextView) findViewById(R.id.portuguestext);
         this.ingles = (TextView) findViewById(R.id.inglesText);
-
+        this.portugues.setText(this.frase.getPortugues());
+        this.ingles.setText(this.frase.getIngles());
 
         helper = new DatabaseHelper(this);
 
@@ -56,10 +60,16 @@ public class CadastraPalavraActivity extends TamplateMtradutor {
         if(valida()) {
 
             Traducao traducao = new Traducao();
+            traducao.setId(frase.getId());
             traducao.setIngles(ingles.getText().toString());
             traducao.setPortugues(portugues.getText().toString());
+            traducao.setNumAcessos(frase.getNumAcessos());
             DaoTraducao daoTraducao = new DaoTraducao();
-            daoTraducao.salvar(helper,traducao,this);
+            daoTraducao.update(helper,traducao,this);
+            Intent intent = new Intent();
+            intent.setClass(this, MainActivity.class);
+            startActivity(intent);
+            Toast.makeText(this, "Os dados foram salvos",Toast.LENGTH_SHORT).show();
 
 
 
