@@ -64,6 +64,7 @@ public class CadastroEditarActivity extends TamplateMtradutor {
             traducao.setIngles(ingles.getText().toString());
             traducao.setPortugues(portugues.getText().toString());
             traducao.setNumAcessos(frase.getNumAcessos());
+            traducao.setRefIndex(ingles.getText().toString().trim());
             DaoTraducao daoTraducao = new DaoTraducao();
             daoTraducao.update(helper,traducao,this);
             Intent intent = new Intent();

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -64,6 +65,7 @@ public class DaoTraducao {
         ContentValues values = new ContentValues();
         values.put("portugues", frase.getPortugues());
         values.put("ingles", frase.getIngles());
+        values.put("refindex", frase.getRefIndex());
         values.put("numacesso", 0);
         long resultado = db.insert("traducao", null, values);
 
@@ -84,6 +86,7 @@ public class DaoTraducao {
         values.put("portugues", frase.getPortugues());
         values.put("ingles", frase.getIngles());
         values.put("numacesso", frase.getNumAcessos());
+        values.put("refindex", frase.getRefIndex());
         long resultado = db.update("traducao", values, "_id = ?", new String []{Integer.toString(frase.getId())});
 
         if (resultado == -1) {
@@ -92,6 +95,31 @@ public class DaoTraducao {
             //Toast.makeText(contexto, "O dados foram salvos",
               //      Toast.LENGTH_SHORT).show();
 
+        }
+
+    }
+
+    public boolean validaDados(String portugues , String ingles, Context contexto,DatabaseHelper helper){
+
+        String strPortugues = portugues;
+        String strIngles = ingles;
+
+        if(TextUtils.isEmpty(strPortugues)){
+            Toast.makeText(contexto, "Palavra em portugues é obrigatório",
+                    Toast.LENGTH_SHORT).show();
+        }
+        if(TextUtils.isEmpty(strIngles)){
+            Toast.makeText(contexto, "Palavra em ingles é obrigatório",
+                    Toast.LENGTH_SHORT).show();
+        }
+
+
+
+        if(TextUtils.isEmpty(strIngles) && TextUtils.isEmpty(strPortugues)){
+            return false;
+        }
+        else{
+            return true;
         }
 
     }

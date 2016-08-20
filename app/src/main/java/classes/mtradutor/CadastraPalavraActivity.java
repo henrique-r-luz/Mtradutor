@@ -58,6 +58,7 @@ public class CadastraPalavraActivity extends TamplateMtradutor {
             Traducao traducao = new Traducao();
             traducao.setIngles(ingles.getText().toString());
             traducao.setPortugues(portugues.getText().toString());
+            traducao.setRefIndex(ingles.getText().toString().trim());
             DaoTraducao daoTraducao = new DaoTraducao();
             daoTraducao.salvar(helper,traducao,this);
 
@@ -73,21 +74,8 @@ public class CadastraPalavraActivity extends TamplateMtradutor {
         String strPortugues = portugues.getText().toString().trim();
         String strIngles = ingles.getText().toString().trim();
 
-        if(TextUtils.isEmpty(strPortugues)){
-            Toast.makeText(this, "Palavra em portugues é obrigatório",
-                    Toast.LENGTH_SHORT).show();
-        }
-        if(TextUtils.isEmpty(strIngles)){
-            Toast.makeText(this, "Palavra em ingles é obrigatório",
-                    Toast.LENGTH_SHORT).show();
-        }
-
-        if(TextUtils.isEmpty(strIngles) && TextUtils.isEmpty(strPortugues)){
-            return false;
-        }
-        else{
-            return true;
-        }
+       DaoTraducao daoTraducao = new DaoTraducao();
+       return daoTraducao.validaDados(strPortugues,strIngles,this,helper);
         //return !isEmptyFields(strPortugues, strIngles);
 
     }
