@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class DaoTraducao {
         Cursor cursor =
                 db.rawQuery("SELECT *" +
                                 " FROM traducao " +
-                                " where ingles like '%"+pesquisa+"%'",
+                                " where upper(ingles) like '%"+pesquisa.toUpperCase().trim()+"%'",
                         null);
         cursor.moveToFirst();
         List<Traducao> frase = new ArrayList<Traducao>();
@@ -64,8 +65,8 @@ public class DaoTraducao {
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("portugues", frase.getPortugues());
-        values.put("ingles", frase.getIngles());
-        values.put("refindex", frase.getRefIndex());
+        values.put("ingles", frase.getIngles().toUpperCase());
+       // values.put("refindex", frase.getRefIndex().toString());
         values.put("numacesso", 0);
         long resultado = db.insert("traducao", null, values);
 
@@ -84,9 +85,9 @@ public class DaoTraducao {
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("portugues", frase.getPortugues());
-        values.put("ingles", frase.getIngles());
+        values.put("ingles", frase.getIngles().toUpperCase());
         values.put("numacesso", frase.getNumAcessos());
-        values.put("refindex", frase.getRefIndex());
+        //values.put("refindex", frase.getRefIndex().toString());
         long resultado = db.update("traducao", values, "_id = ?", new String []{Integer.toString(frase.getId())});
 
         if (resultado == -1) {
@@ -101,8 +102,23 @@ public class DaoTraducao {
 
     public boolean validaDados(String portugues , String ingles, Context contexto,DatabaseHelper helper){
 
-        String strPortugues = portugues;
-        String strIngles = ingles;
+        String strPortugues = portugues.trim();
+        String strIngles = ingles.trim();
+
+
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor cursor =
+                db.rawQuery("SELECT *" +
+                                " FROM traducao " +
+                                " where upper(ingles) = '"+strIngles.toUpperCase()+"'",
+                        null);
+        cursor.moveToFirst();
+        Log.v("TAG", Integer.toString(cursor.getCount()));
+        if(cursor.getCount()!=0){
+            Toast.makeText(contexto, "Palavra já exite",
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
 
         if(TextUtils.isEmpty(strPortugues)){
             Toast.makeText(contexto, "Palavra em portugues é obrigatório",

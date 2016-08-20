@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -144,8 +145,8 @@ public class MainActivity extends TamplateMtradutor {
 
         //new AlertDialog.Builder(this).setTitle("texto").setMessage(palavra.getText()).setNeutralButton("Close", null).show();
         List<Traducao> frase = gerarFrases(palavra.getText().toString());
-
-        if (frase.isEmpty()) {
+        Log.v("contesto",Boolean.toString(palavra.getText().toString().trim().isEmpty()));
+        if (frase.isEmpty() || palavra.getText().toString().trim().isEmpty()) {
             new AlertDialog.Builder(this).setTitle("Messagem").setMessage("Não existe esta palavra").setNeutralButton("Close", null).show();
         } else {
             final ItensFrases fraseAdapter = new ItensFrases(this, frase);

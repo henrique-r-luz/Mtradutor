@@ -58,9 +58,11 @@ public class CadastraPalavraActivity extends TamplateMtradutor {
             Traducao traducao = new Traducao();
             traducao.setIngles(ingles.getText().toString());
             traducao.setPortugues(portugues.getText().toString());
-            traducao.setRefIndex(ingles.getText().toString().trim());
+            //traducao.setRefIndex(ingles.getText().toString());
             DaoTraducao daoTraducao = new DaoTraducao();
             daoTraducao.salvar(helper,traducao,this);
+            ingles.setText("");
+            portugues.setText("");
 
 
 
@@ -71,8 +73,8 @@ public class CadastraPalavraActivity extends TamplateMtradutor {
     public boolean valida() {
 
 
-        String strPortugues = portugues.getText().toString().trim();
-        String strIngles = ingles.getText().toString().trim();
+        String strPortugues = portugues.getText().toString();
+        String strIngles = ingles.getText().toString();
 
        DaoTraducao daoTraducao = new DaoTraducao();
        return daoTraducao.validaDados(strPortugues,strIngles,this,helper);

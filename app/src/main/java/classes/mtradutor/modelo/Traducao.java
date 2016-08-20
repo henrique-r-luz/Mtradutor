@@ -12,7 +12,7 @@ public class Traducao implements Serializable {
     private int id;
     private String ingles;
     private String portugues;
-    private String refIndex;
+  //  private String refIndex;
     private int numAcessos;
 
 
@@ -48,11 +48,5 @@ public class Traducao implements Serializable {
         this.numAcessos = numAcessos;
     }
 
-    public String getRefIndex() {
-        return refIndex;
-    }
 
-    public void setRefIndex(String refIndex) {
-        this.refIndex = refIndex;
-    }
 }

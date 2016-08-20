@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String BANCO_DADOS = "Mtradutor";
-    private static int VERSAO = 2;
+    private static int VERSAO = 3;
 
 
 
@@ -41,7 +41,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-        db.execSQL("ALTER TABLE traducao ADD COLUMN refindex TEXT");
+       // db.execSQL("ALTER TABLE traducao drop COLUMN refindex;");
     }
 
 
