@@ -41,7 +41,7 @@
         android:id="@+id/portuguestext"
         android:layout_width="match_parent"
         android:layout_height="235dp"
-        android:ems="10"
+
         android:textSize="16sp"
         android:gravity="left|top"
         android:inputType="textMultiLine">

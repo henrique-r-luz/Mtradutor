@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,8 +41,10 @@ public class CadastraPalavraActivity extends TamplateMtradutor {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cadastra_palavra);
 
-        this.portugues = (TextView) findViewById(R.id.portuguestext);
+
         this.ingles = (TextView) findViewById(R.id.inglesText);
+        this.ingles.requestFocus();
+        this.portugues = (TextView) findViewById(R.id.portuguestext);
 
 
         helper = new DatabaseHelper(this);
@@ -88,6 +91,7 @@ public class CadastraPalavraActivity extends TamplateMtradutor {
         helper.close();
         super.onDestroy();
     }
+
 
 
 }
