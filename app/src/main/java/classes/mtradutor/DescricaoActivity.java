@@ -42,7 +42,7 @@ public class DescricaoActivity extends TamplateMtradutor {
         this.id = frase.getId();
         unitTexto.setText(frase.getIngles());
         descricaoTexto.setText(frase.getPortugues());
-        numAcesso.setText("Visualuzações: "+frase.getNumAcessos());
+        numAcesso.setText("Visualizações: "+frase.getNumAcessos());
         helper = new DatabaseHelper(this);
 
     }

@@ -19,6 +19,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -36,7 +37,7 @@ import classes.mtradutor.dao.DaoTraducao;
 import classes.mtradutor.modelo.DatabaseHelper;
 import classes.mtradutor.modelo.Traducao;
 
-public class MainActivity extends TamplateMtradutor {
+public class MainActivity extends TamplateMtradutor implements AdapterView.OnItemClickListener{
 
     private List<String> listGroup;
     private HashMap<String, List<String>> listData;
@@ -151,18 +152,8 @@ public class MainActivity extends TamplateMtradutor {
         } else {
             final ItensFrases fraseAdapter = new ItensFrases(this, frase);
             lView.setAdapter(fraseAdapter);
-            lView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            lView.setOnItemClickListener(this);
 
-                @Override
-                public void onItemClick(AdapterView<?> arg0, View view, int position, long arg3) {
-
-                    TextView objtexto = (TextView) view.findViewById(R.id.titulo);
-                    Traducao frase =  (Traducao) arg0.getAdapter().getItem(position);
-                    viewSignificado(frase);
-                    //   new AlertDialog.Builder(MainActivity.this).setTitle("Argh").setMessage("Watch out!").setNeutralButton("Close", null).show();
-
-                }
-            });
         }
         ///  new AlertDialog.Builder(this).setTitle("Argh").setMessage("Watch out!").setNeutralButton("Close", null).show();
     }
@@ -175,15 +166,16 @@ public class MainActivity extends TamplateMtradutor {
 
     }
 
-
-
-
-
-
     protected void onDestroy() {
         helper.close();
         super.onDestroy();
     }
 
 
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        TextView objtexto = (TextView) view.findViewById(R.id.titulo);
+        Traducao frase =  (Traducao) adapterView.getAdapter().getItem(i);
+        viewSignificado(frase);
+    }
 }

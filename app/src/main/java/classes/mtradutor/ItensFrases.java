@@ -1,6 +1,7 @@
 package classes.mtradutor;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +10,6 @@ import android.widget.TextView;
 import classes.mtradutor.modelo.Traducao;
 
 import java.util.List;
-
-import classes.mtradutor.modelo.Traducao;
 
 /**
  * Created by henrique on 28/02/16.
@@ -55,7 +54,8 @@ public class ItensFrases extends ArrayAdapter<Traducao> {
     }
 
 
-
-
+    /**
+     * Created by henrique on 21/08/16.
+     */
 
 }

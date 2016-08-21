@@ -139,4 +139,32 @@ public class DaoTraducao {
         }
 
     }
+
+    public List<Traducao> rank(DatabaseHelper helper, String num){
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor cursor =
+                db.rawQuery("SELECT *" +
+                                " FROM traducao " +
+                                " order by numacesso DESC limit "+num,
+                        null);
+        cursor.moveToFirst();
+        List<Traducao> frase = new ArrayList<Traducao>();
+        for (int i = 0; i < cursor.getCount(); i++) {
+
+            Traducao item = new Traducao();
+
+            item.setId(cursor.getInt(0));
+            item.setIngles(cursor.getString(1));
+            item.setPortugues(cursor.getString(2));
+            item.setNumAcessos(cursor.getInt(3));
+
+            frase.add(item);
+            cursor.moveToNext();
+
+        }
+        cursor.close();
+
+        return frase;
+
+    }
 }

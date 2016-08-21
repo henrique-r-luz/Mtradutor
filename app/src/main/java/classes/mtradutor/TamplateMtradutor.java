@@ -56,7 +56,7 @@ public class TamplateMtradutor  extends AppCompatActivity {
 
     public void viewEstatistica(){
         Intent intent = new Intent();
-        intent.setClass(this, EstatisticaActivity.class);
+        intent.setClass(this, RankActivity.class);
         //intent.putExtra("titulo", str);
         startActivity(intent);
     }
