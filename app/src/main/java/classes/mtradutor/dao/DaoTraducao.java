@@ -26,8 +26,8 @@ public class DaoTraducao {
         Cursor cursor =
                 db.rawQuery("SELECT *" +
                                 " FROM traducao " +
-                                " where upper(ingles) like '%"+pesquisa.toUpperCase().trim()+"%'",
-                        null);
+                                " where upper(ingles) like ?",
+                        new String []{"%"+pesquisa.toUpperCase().trim()+"%"});
         cursor.moveToFirst();
         List<Traducao> frase = new ArrayList<Traducao>();
         for (int i = 0; i < cursor.getCount(); i++) {
@@ -108,10 +108,13 @@ public class DaoTraducao {
 
         SQLiteDatabase db = helper.getReadableDatabase();
         Cursor cursor =
+//                db.rawQuery("SELECT *" +
+  //                              " FROM traducao " +
+   //                             " where upper(ingles) = '"+strIngles.toUpperCase()+"'",
                 db.rawQuery("SELECT *" +
-                                " FROM traducao " +
-                                " where upper(ingles) = '"+strIngles.toUpperCase()+"'",
-                        null);
+                                                      " FROM traducao " +
+                                                     " where upper(ingles) =?",
+                        new String []{strIngles.toUpperCase()});
         cursor.moveToFirst();
         Log.v("TAG", Integer.toString(cursor.getCount()));
         if(cursor.getCount()!=0){
