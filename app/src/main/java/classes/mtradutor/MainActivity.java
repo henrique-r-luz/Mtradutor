@@ -75,7 +75,12 @@ public class MainActivity extends TamplateMtradutor implements AdapterView.OnIte
     public void onResume()
     {  // After a pause OR at startup
         super.onResume();
-        lView.setAdapter(null);
+        List<Traducao> frase = gerarFrases(palavra.getText().toString());
+        if (!(frase.isEmpty() || palavra.getText().toString().trim().isEmpty())) {
+            povoaLista(frase);
+        }
+
+       // lView.setAdapter(null);
 
         //Refresh your stuff here
 
@@ -146,16 +151,21 @@ public class MainActivity extends TamplateMtradutor implements AdapterView.OnIte
 
         //new AlertDialog.Builder(this).setTitle("texto").setMessage(palavra.getText()).setNeutralButton("Close", null).show();
         List<Traducao> frase = gerarFrases(palavra.getText().toString());
-        Log.v("contesto",Boolean.toString(palavra.getText().toString().trim().isEmpty()));
         if (frase.isEmpty() || palavra.getText().toString().trim().isEmpty()) {
             new AlertDialog.Builder(this).setTitle("Messagem").setMessage("Não existe esta palavra").setNeutralButton("Close", null).show();
         } else {
-            final ItensFrases fraseAdapter = new ItensFrases(this, frase);
-            lView.setAdapter(fraseAdapter);
-            lView.setOnItemClickListener(this);
+            povoaLista(frase);
 
         }
         ///  new AlertDialog.Builder(this).setTitle("Argh").setMessage("Watch out!").setNeutralButton("Close", null).show();
+    }
+
+
+    private void povoaLista(List<Traducao> frase){
+        final ItensFrases fraseAdapter = new ItensFrases(this, frase);
+        lView.setAdapter(fraseAdapter);
+        lView.setOnItemClickListener(this);
+
     }
 
 
