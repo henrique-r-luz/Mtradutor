@@ -1,14 +1,32 @@
 package classes.mtradutor;
 
+import android.app.SearchManager;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 /**
  * Created by henrique on 31/07/16.
  */
-public class TamplateMtradutor  extends AppCompatActivity {
+public class TamplateMtradutor extends AppCompatActivity {
+
+
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+
+
+
 
 
     @Override
@@ -33,15 +51,21 @@ public class TamplateMtradutor  extends AppCompatActivity {
             //return true;
             // Toast.makeText(getApplicationContext(), "teste setting", Toast.LENGTH_SHORT).show();
         }
-        if(id==R.id.estatistica){
-           viewEstatistica();
+        if (id == R.id.estatistica) {
+            viewEstatistica();
         }
-        if(id==R.id.inicio){
+        if (id == R.id.inicio) {
             viewInicio();
         }
+        if (id == R.id.menu_search) {
+          //  SearchView pesquisa= (SearchView) findViewById(R.id.menu_search);
+          //  Toast.makeText(getApplicationContext(), pesquisa.getQuery(), Toast.LENGTH_SHORT).show();
+        }
+
+
+
         return super.onOptionsItemSelected(item);
     }
-
 
 
     // abre tela de cadastro de palavra
@@ -54,7 +78,7 @@ public class TamplateMtradutor  extends AppCompatActivity {
 
     //abre a tela de estatistica
 
-    public void viewEstatistica(){
+    public void viewEstatistica() {
         Intent intent = new Intent();
         intent.setClass(this, RankActivity.class);
         //intent.putExtra("titulo", str);
@@ -62,11 +86,12 @@ public class TamplateMtradutor  extends AppCompatActivity {
     }
 
 
-    public void viewInicio(){
+    public void viewInicio() {
         Intent intent = new Intent();
         intent.setClass(this, MainActivity.class);
         //intent.putExtra("titulo", str);
         startActivity(intent);
     }
+
 
 }
