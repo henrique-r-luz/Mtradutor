@@ -170,4 +170,18 @@ public class DaoTraducao {
         return frase;
 
     }
+
+    public int contaPalavras(DatabaseHelper helper){
+
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor cursor =
+                db.rawQuery("SELECT count(*)" +
+                                " FROM traducao ",
+                        null);
+        cursor.moveToFirst();
+        int cont = cursor.getInt(0);
+        cursor.close();
+        return cont;
+
+    }
 }

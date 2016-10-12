@@ -7,10 +7,14 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import classes.mtradutor.dao.DaoTraducao;
 import classes.mtradutor.modelo.DatabaseHelper;
@@ -35,10 +39,16 @@ public class RankActivity  extends TamplateMtradutor implements AdapterView.OnIt
         setContentView(R.layout.rank);
         Spinner spinner = (Spinner) findViewById(R.id.top);
        // spinner.setOnItemSelectedListener(this);
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, numTop);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,  R.layout.my_spinner, numTop);
         spinner.setAdapter(dataAdapter);
         spinner.setOnItemSelectedListener(this);
         helper = new DatabaseHelper(this);
+        TextView total  = (TextView) findViewById(R.id.total);
+        DaoTraducao daoTraducao = new DaoTraducao();
+        int cont = daoTraducao.contaPalavras(helper);
+        total.setText("Total: "+ Integer.toString(cont));
+
+
 
     }
 

@@ -11,7 +11,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="classes.mtradutor.CadastraPalavraActivity"
-    android:id="@+id/backgroud">
+    android:id="@+id/backgroud"
+    android:weightSum="1">
 
 
     <TextView
@@ -40,20 +41,16 @@
     <EditText
         android:id="@+id/portuguestext"
         android:layout_width="match_parent"
-        android:layout_height="235dp"
-
+        android:layout_height="130dp"
         android:textSize="16sp"
         android:gravity="left|top"
         android:inputType="textMultiLine">
-
-        <requestFocus />
     </EditText>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Cadastrar"
-
         android:onClick="salvar"
         android:id="@+id/button" />
 </LinearLayout>
