@@ -44,14 +44,14 @@ import classes.mtradutor.dao.DaoTraducao;
 import classes.mtradutor.modelo.DatabaseHelper;
 import classes.mtradutor.modelo.Traducao;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class MainActivity extends TamplateMtradutor implements AdapterView.OnItemClickListener {
 
     private List<String> listGroup;
     private HashMap<String, List<String>> listData;
     private TextView texto;
     private DatabaseHelper helper;
-    private EditText palavra;
     private ListView lView;
+    private String queryPesq = "";
     private FloatingActionButton myFab;
 
     /**
@@ -87,39 +87,35 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         init();
         helper = new DatabaseHelper(this);
 
-        // lView.setAdapter(fraseAdapter);
-        // lView.setAdapter(new ItensFrases(this,
-        //       android.R.layout.simple_list_item_1, listarViagens()));
 
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
         client3 = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
-    @Override
+  /*  @Override
     //menu superioor
     public boolean onCreateOptionsMenu(Menu menu) {
 
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
         return true;
-    }
+    }*/
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
         MenuItem item = menu.findItem(R.id.menu_search);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
+        item.setVisible(true);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(MainActivity.this, "ola", Toast.LENGTH_SHORT).show();
-                return false;
+                Log.d("Lucien", "Buscando " + query);
+                MainActivity.this.queryPesq = query;
+                eventEnter(MainActivity.this.queryPesq);
+                //Toast.makeText(MainActivity.this, "ola", Toast.LENGTH_SHORT).show();
+                searchView.clearFocus();
+                return true;
             }
 
             @Override
@@ -133,41 +129,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
 
-        @Override
-        //menu superior
-        public boolean onOptionsItemSelected (MenuItem item){
-            // Handle action bar item clicks here. The action bar will
-            // automatically handle clicks on the Home/Up button, so long
-            // as you specify a parent activity in AndroidManifest.xml.
-            int id = item.getItemId();
-
-            //noinspection SimplifiableIfStatement
-            if (id == R.id.nova_palavra) {
-                // viewCadastraPalavar();
-                //return true;
-                // Toast.makeText(getApplicationContext(), "teste setting", Toast.LENGTH_SHORT).show();
-            }
-            if (id == R.id.estatistica) {
-                //viewEstatistica();
-            }
-            if (id == R.id.inicio) {
-                //viewInicio();
-            }
-       /* if (id == R.id.menu_search) {
-            SearchView searchView = (SearchView) menu.findItem(R.id.menu_search)
-              Toast.makeText(MainActivity.this, pesquisa.get, Toast.LENGTH_SHORT).show();
-        }*/
-
-
-            return super.onOptionsItemSelected(item);
-        }
 
 
     public void onResume() {  // After a pause OR at startup
         super.onResume();
-        List<Traducao> frase = gerarFrases(palavra.getText().toString());
-        if (!(frase.isEmpty() || palavra.getText().toString().trim().isEmpty())) {
-            povoaLista(frase);
+        List<Traducao> frase = gerarFrases(this.queryPesq);
+        if(this.queryPesq!=""){
+            if (!(frase.isEmpty()) ){
+                povoaLista(frase);
+            }
         }
 
         // lView.setAdapter(null);
@@ -179,30 +149,16 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
 
     public void init() {
-        texto = (TextView) findViewById(R.id.texto);
-        palavra = (EditText) findViewById(R.id.palavra);
+       // texto = (TextView) findViewById(R.id.texto);
         lView = (ListView) findViewById(R.id.palavrasList);
         myFab = (FloatingActionButton) findViewById(R.id.fab);
 
         setEventFloat(myFab);
         //eventos
-        this.setEventEnter(palavra);
+      ///  this.setEventEnter(palavra);
     }
 
 
-    //menu superioor
-   /* public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-
-        return true;
-
-    }*/
-
-
-    /*
-       dispara esse evento quando pessiona o botão enter
-    */
     //abre a tela de visualizaçao de significado da palavra
     public void viewSignificado(Traducao frase) {
         DaoTraducao daoTraducao = new DaoTraducao();
@@ -215,7 +171,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         //new AlertDialog.Builder(this).setTitle("Argh").setMessage("Watch out!").setNeutralButton("Close", null).show();
     }
 
-
+    // seta evento do botão flutuante
     public void setEventFloat(FloatingActionButton fab) {
         fab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -227,33 +183,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         });
     }
 
-    /*
-    verifica qual tecla foi pessinada
-     */
-    public void setEventEnter(EditText pesquisa) {
 
-        pesquisa.setOnKeyListener(new View.OnKeyListener() {
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_DOWN)
-                    if ((keyCode == KeyEvent.KEYCODE_DPAD_CENTER) ||
-                            (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                        eventEnter();
-                        //Toast.makeText(getApplicationContext(), "teste setting", Toast.LENGTH_SHORT).show();
-                        // new AlertDialog.Builder(v).setTitle("Argh").setMessage("Watch out!").setNeutralButton("Close", null).show();
-                        return true;
-                    }
-                return false;
-            }
-        });
 
-    }
 
     // dispara evento quando se pesquisa uma palavra
-    private void eventEnter() {
-
+    private void eventEnter(String pesquisaText) {
+       // Toast.makeText(MainActivity.this, pesquisaText, Toast.LENGTH_SHORT).show();
         //new AlertDialog.Builder(this).setTitle("texto").setMessage(palavra.getText()).setNeutralButton("Close", null).show();
-        List<Traducao> frase = gerarFrases(palavra.getText().toString());
-        if (frase.isEmpty() || palavra.getText().toString().trim().isEmpty()) {
+        List<Traducao> frase = gerarFrases(pesquisaText);
+        if (frase.isEmpty() ){//|| palavra.getText().toString().trim().isEmpty()) {
             new AlertDialog.Builder(this).setTitle("Messagem").setMessage("Não existe esta palavra").setNeutralButton("Close", null).show();
         } else {
             povoaLista(frase);
