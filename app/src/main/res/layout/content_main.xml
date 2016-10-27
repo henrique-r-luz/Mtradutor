@@ -14,37 +14,11 @@
     tools:showIn="@layout/activity_main">
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:text="Pesquisa a palavra:"
-            android:id="@+id/texto"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:textSize="16sp"
-            android:id="@+id/palavra"
-            android:layout_below="@+id/texto"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
-
         <ListView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/palavrasList"
-            android:layout_below="@+id/palavra"
-            android:layout_alignParentLeft="true"
 
-            android:layout_alignParentStart="true"
             android:padding="10dip"
             android:clipToPadding="false"/>
 

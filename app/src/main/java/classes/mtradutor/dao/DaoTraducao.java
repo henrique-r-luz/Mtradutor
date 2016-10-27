@@ -23,11 +23,16 @@ public class DaoTraducao {
     public  List<Traducao> listaTodos(DatabaseHelper helper, String pesquisa){
 
         SQLiteDatabase db = helper.getReadableDatabase();
-        Cursor cursor =
-                db.rawQuery("SELECT *" +
-                                " FROM traducao " +
-                                " where upper(ingles) like ?",
-                        new String []{"%"+pesquisa.toUpperCase().trim()+"%"});
+        Cursor cursor;
+        if(pesquisa.equals("*")) {
+            cursor = db.rawQuery("SELECT * FROM traducao",null);
+        }else {
+            cursor =
+                    db.rawQuery("SELECT *" +
+                                    " FROM traducao " +
+                                    " where upper(ingles) like ?",
+                            new String[]{"%" + pesquisa.toUpperCase().trim() + "%"});
+        }
         cursor.moveToFirst();
         List<Traducao> frase = new ArrayList<Traducao>();
         for (int i = 0; i < cursor.getCount(); i++) {

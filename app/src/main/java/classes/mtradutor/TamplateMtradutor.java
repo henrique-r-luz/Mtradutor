@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
@@ -25,7 +26,7 @@ public class TamplateMtradutor extends AppCompatActivity {
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
 
-
+    protected  MenuItem menuPesquisa;
 
 
 
@@ -65,6 +66,14 @@ public class TamplateMtradutor extends AppCompatActivity {
 
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        this.menuPesquisa = menu.findItem(R.id.menu_search);
+        this.menuPesquisa.setVisible(false);
+        return true;
     }
 
 
